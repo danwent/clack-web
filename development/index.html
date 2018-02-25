@@ -1,0 +1,162 @@
+
+
+<html>
+    <STYLE type="text/css">
+       PRE { background-color: LIGHTGREY }
+       H3 { background-color: LIGHTGREEN }
+    </STYLE>
+<title> Clack Graphical Router Development Home </title> 
+<body> 
+
+
+<!--RiteCounter-->
+<script type="text/javascript" src="http://www.ritecounter.com/c/12/11834.js"></script>
+<noscript><a href="http://www.ritecounter.com"><img src="http://www.ritecounter.com/scripts/htmlc.php?id=11834" alt="Invisible Hit Counter" border=0></a></noscript>
+<!--END RiteCounter-->
+
+<center><a href="../index.html">  <img src="http://www.clackrouter.net/logo7.gif" /> 
+</a> 
+
+<h2>  Development Central for the Clack Graphical Router Project </h2>
+</center>
+
+Clack is an <b> open-source </b> 
+graphical router that is written in Java.  Clack routers exist in 
+virtual networks that are connected to the Internet, meaning your router
+processes and analyzes REAL Internet traffic.  
+A lot of functionality already exists for Clack,
+but we are always looking for more people to help with development.  Coding
+in Clack can be a surprisingly easy and fun experience.  You can:
+
+<ol>
+<li> <p> Write modular components to add new networking functionality to Clack. </li>
+<li> <p> Use Java GUI programming to create visualizations of router 
+behavior or traffic passing through the router </li>
+<li> <p> Create command-line programs that run on top of a Clack router to 
+inspect/modify router state (e.g arp -a, ifconfig) or generate traffic to 
+run through your virtual network (e.g. ping, wget) </li> 
+</ol>
+
+<p> The best way to learn about how to code with clack is to read the <a href="../hackclack2.pdf"> Clack Router Developer Docs </a> and to work with the 
+source code and javadocs found in the <b> Downloads </b> section of the main
+page.  If you still have concerns after contacting these sources, feel free
+to email us.  </p>
+
+<h2> Development Ideas </h2>
+
+We've been working with Clack for some time now, and have a running list of
+ideas on what might be fun / useful to develop.  If you do start working on
+one of these projects, let us know so we can make sure no work is duplicated!
+We can help you by providing specific topologies to test on.   
+
+<h3> Possible new components to create </h3>  
+<ul>
+<li>  <p><b>ICMP Destination unreachable generation:</b>  
+While our ARP component errors
+when no response if received, currently a dest unreach is not generated.  
+</p>
+</li>
+<li>  <p> <font color="red"><i> (DONE) <strike>High Priority</strike> </i></font> 
+<b> Link-state routing component (ie: OSPF):</b>  We recently finished a RIP implementation that has been used as a course assignment, so all of the routing
+interfaces are documented <a href="../rip/api.html"> here </a>.  Extending 
+Clack to also support a link-state protocol will be very useful.
+<p/>
+</li>
+<li> 
+<p><font color="red"><i> (DONE) </i></font> 
+<b>NAT component:</b> demonstrate different types of NAT, symmetric, half-cone,
+etc and provide a basic visulization of a the internal translation tables.
+</p>
+<li>  <p> <b> Firewall / Intrusion detection component: </b>  This could make for a 
+very fun class assigment, since Clack networks are virtual, meaning that 
+students can use real tools to pen-test each other's IDS/firewall.  Providing
+a Clack application to configure your system is probably a good idea.  
+</p>
+</li>
+<li> <p>
+<b> Weighted-Fair-Queueing (WFQ): </b> Clack already demonstrates basic queueing 
+principles, and we are currently creating a new visualization for RED queues.
+WFQ would be another useful queueing discipline to demonstrate visually. 
+</p>
+<li> <p> <b> Etherenet switch/bridge: </b> Demonstrate Ethernet switching,
+ possibly including port learning and rapid spanning tree protocol (RTSP). 
+</p>
+</li>
+</ul>
+
+<h3> Possible new Clack applications to create </h3>
+<ul>
+<li> <p> <b> Generic TCP and UDP flow generation:</b> Create a generic
+command-line mechanism for generate TCP or UDP traffic at a particular rate.
+The <a href="http://dast.nlanr.net/Projects/Iperf/"> iperf </a> tool would be
+a good example to clone.  </p> </li>
+<li> <p> <b> traceroute: </b> Simple implementation of traceroute.  </p> </li>
+<li> <p> <b> ARP utility: </b> A command-line utility to view and  modify arp 
+entries on a router.  Based on the 'arp' unix utility.  </p></li>
+<li> <p> <b> Cisco commands: </b>  Currently clack supports unix-like commands for
+viewing and modify configuration information include routing tables.  
+Clack could also support the Cisco commands. 
+</p> </li>
+</ul> 
+
+<h3>  Other Coding Needed for Clack </h3>
+<ul>
+<li> <p> <font color=red> <i> (DONE) <strike> High Priority </strike></i> </font>
+<b> Disconnected Virtual Networks: </b>  
+Allowing use of Clack without VNS for simple demos that do not require 
+Internet connectivity to be effective.  This will involve getting the 
+actually topology from a local file, not from VNS, and rewriting all 
+VNS and firewall assumptions that are embedded in the startup configuration
+code.  </p> </li>
+<li> <p> <font color="red"><i> High Priority </i></font> 
+<b> GUI for creating topologies: </b>
+Right now, users cannot change the number of routers in a virtual network,
+or their connectivity, without the help of Clack admins.  We would like 
+users to graphically be able to build their own networks.  A good amount of the
+code for this is already written, but it has not been integrated and tested.
+</p></li>
+<li> <p> <font color="red"><i> High Priority </i></font> 
+<b> Directional links in network view: </b> Currently, interfaces within the
+network view are connected by a single link, which lights up whenever a packet
+is sent in either direction.  We want to modify this so users can tell the 
+direction of transmitted traffic. 
+</p> 
+</li>
+<li>  
+<p> <b> Ethereal Filters: </b> Add filtering capabilities to Ethereal, 
+so that users can control what packets
+are visible in the top ''packet list'' window.  Ideally, this would use 
+intelligent drop down boxes so that students would not need to remember any
+kind of filter syntax.  For example, we would have a ''src IP'' filter drop
+down that would list all source IP's currently in the table, and allow
+the user to select one or more to allow.  
+</p> </li>
+<li> 
+<p> <b> TCP endhost visualizations:</b>.  We have a simple Internet compatable 
+TCP implementation, and had a nice ``hierarchical component'' that let the
+user explore within the TCP stack.  It was 80% done and we 
+haven't had time to finish it yet.  We were also planning on adding some 
+stuff similar to the "Timeline" and "TCP State" views in 
+<a href="http://www.cs.mtu.edu/vta/">  VTA </a>.  Existing code is mainly 
+in packages <i> net.clackrouter.component.tcp</i> and <i>net.clackrouter.gui.tcp</i>.
+Contact us if you are interested.  </p> </li> 
+<li> <p> <b> More/better Ethereal parsers:</b> There are more network level
+and application level protocols that
+Clack's ethereal packet analyzer could parse and show.  
+The TCP and UDP parsers could also stand to be cleaned up.
+</p></li>
+<li> <p> <b>Clean up IPPacket class: </b> 
+Better interface for accessing IPPacket fields.  As of now, they still
+use the old ByteBuffer getters/setters inherited from long ago.
+</p></li>
+</ul>
+<h3> Non-Coding Development Needed </h3> 
+<ul>
+<li> <p> <font color=red> <i> High Priority</i> </font> 
+<b> Clack Demos: </b> 
+A series of demos (both video and live) that show major capabilities of
+Clack.  Definitely need: 1) RIP routing 2) ethereal 3) TCP vs. UDP
+4) REDQueue </p></li> 
+</ul>
+</body> 
+</html>

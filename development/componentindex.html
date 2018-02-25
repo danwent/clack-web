@@ -1,0 +1,197 @@
+<!DOCTYPE html PUBLIC 
+  "-//W3C//DTD XHTML 1.0 Strict//EN" 
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>Clack Component Index</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <meta http-equiv="Content-language" content="en" />
+  <meta name="author" content="Jonathan Effrat, Dan Wendlandt" />
+  <style type="text/css" media="all">@import "main.css";</style>  
+</head>
+<body>
+
+
+<div id="title">
+<!-- <span style="letter-spacing: 0.5em; word-spacing: 1.0em;">The Clack Graphical Router Project</span> -->
+<img src="cci-title1.gif">
+</div>
+
+<div id="container">
+
+<center>
+<img border="0" src="logo7.gif" width="370" height="180">
+<p>
+<table cellpadding=6 height="697" style="border-collapse: collapse" bordercolor="#999999" cellspacing="0" width="745" border="1" >
+<tr><td height="19" width="172" align="center"><font size="+1"><b>Class</b></font></td>
+  <td height="19" width="156" align="center"><font size="+1"><b>Name</b></font></td>
+  <td height="19" width="287" align="center"><font size="+1"><b>Description</b></font></td> 
+  <td height="19" width="82" align="center"><font size="+1"><b>Details</b></font></td></tr>
+<tr><td height="19" width="172" align="center"> <b><i>Interface Devices</i></b></td>
+  <td height="19" width="156" align="center"> &nbsp;</td>
+  <td height="19" width="287" align="left"> &nbsp;</td> 
+  <td height="19" width="82" align="center"> &nbsp;</td></tr>
+<tr><td height="19" width="172" align="center"> &nbsp;</td>
+  <td height="19" width="156" align="center"> <b><i> FromDevice </i></b> </td>
+  <td height="19" width="287" align="left"> Reads incoming packets from a network interface </td> 
+  <td height="19" width="82" align="center"> <a href="descr/InterfaceIn.html"> [details] </a> </td></tr>
+<tr>
+  <td height="19" width="172" align="center">  &nbsp;</td>
+  <td height="19" width="156" align="center">  <b><i>ToDevice</i></b> </td>
+  <td height="19" width="287" align="left"> Sends outgoing packets to a network interface </td> 
+  <td height="19" width="82" align="center"> <a href="descr/InterfaceOut.html"> [details] </a></td>
+</tr>
+<tr><td height="19" width="172" align="center">  <i><b>Header Strip/Encap</b></i></td>
+  <td height="19" width="156" align="center">  &nbsp;</td>
+  <td height="19" width="287" align="left"> &nbsp;</td> 
+  <td height="19" width="82" align="center"> &nbsp;</td></tr>
+<tr><td height="19" width="172" align="center">  &nbsp;</td>
+  <td height="19" width="156" align="center">  <i><b>EtherStrip</b></i></td>
+  <td height="19" width="287" align="left"> Removes the Ethernet header from a 
+  frame</td> <td height="19" width="82" align="center"> &nbsp;</td></tr>
+<tr><td height="19" width="172" align="center">  &nbsp;</td>
+  <td height="19" width="156" align="center">  <i><b>EtherEncap</b></i></td>
+  <td height="19" width="287" align="left"> Encapsulates a payload in an 
+  Ethernet frame</td> <td height="19" width="82" align="center"> &nbsp;</td></tr>
+<tr><td height="19" width="172" align="center">  <i><b>Layer Demultiplexers</b></i></td>
+  <td height="19" width="156" align="center">  &nbsp;</td>
+  <td height="19" width="287" align="left"> &nbsp;</td> 
+  <td height="19" width="82" align="center"> &nbsp;</td></tr>
+<tr><td height="19" width="172" align="center">  &nbsp;</td>
+  <td height="19" width="156" align="center">  <b><i>Level2Demux</i></b> </td>
+  <td height="19" width="287" align="left"> Demultiplexes ARP and IP Packets  </td> 
+  <td height="19" width="82" align="center"> <a href="descr/Level2Demux.html"> [details] </a></td></tr>
+<tr>
+  <td height="19" width="172" align="center">  <b><i>&nbsp;</i></b></td>
+  <td height="19" width="156" align="center">  <b><i>Level3Demux</i></b></td>
+  <td height="19" width="287" align="left"> Strips the IP header and demultiplexes TCP, UDP, and ICMP packets</td> 
+  <td height="19" width="82" align="center"> <a href="descr/Level3Demux.html"> [details] </a></td>
+</tr>
+<tr><td height="19" width="172" align="center">  <i><b>ARP Layer</b></i></td>
+  <td height="19" width="156" align="center">  &nbsp;</td>
+  <td height="19" width="287" align="left"> &nbsp;</td> 
+  <td height="19" width="82" align="center"> &nbsp;</td></tr>
+<tr><td height="19" width="172" align="center">  &nbsp;</td>
+  <td height="19" width="156" align="center">  <b><i>ARPDemux </i></b></td>
+  <td height="19" width="287" align="left"> Demultiplexes ARP Requests and Replies. </td> 
+  <td height="19" width="82" align="center"> <a href="descr/ARPDemux.html"> [details] </a></td></tr>
+<tr><td height="19" width="172" align="center"> &nbsp;</td>
+  <td height="19" width="156" align="center"> <b><i>ARPRespond </i></b></td>
+  <td height="19" width="287" align="left"> Responds to incoming ARP requests </td> 
+  <td height="19" width="82" align="center"> <a href="descr/ARPRespond.html"> [details] </a></td></tr>
+<tr><td height="19" width="172" align="center"> &nbsp;</td>
+  <td height="19" width="156" align="center"> <b><i>ARPLookup </i></b></td>
+  <td height="19" width="287" align="left"> Contains ARP cache and handles querying for unknown hardware addresses</td> 
+  <td height="19" width="82" align="center"> <a href="descr/ARPLookup.html"> [details] </a></td></tr>
+<tr><td height="19" width="172" align="center">  <i><b>IP Processing</b></i></td>
+  <td height="19" width="156" align="center">  &nbsp;</td>
+  <td height="19" width="287" align="left"> &nbsp;</td> 
+  <td height="19" width="82" align="center"> &nbsp;</td></tr>
+<tr><td height="19" width="172" align="center">  &nbsp;</td>
+  <td height="19" width="156" align="center">  <b><i>IPHeader Check</i></b></td>
+  <td height="19" width="287" align="left"> Verifies the contents of an IP Header. </td> 
+  <td height="19" width="82" align="center"> <a href="descr/IPHeaderCheck.html">[details]
+  </a></td></tr>
+<tr><td height="19" width="172" align="center">  &nbsp;</td>
+  <td height="19" width="156" align="center">  <b><i>IPRouteLookup </i></b></td>
+  <td height="19" width="287" align="left"> Performs a longest-prefix-match lookup in a simple IP routing table</td> 
+  <td height="19" width="82" align="center"> <a href="descr/IPRouteLookup.html">[details]
+  </a></td></tr>
+<tr>
+  <td height="19" width="172" align="center">  &nbsp;</td>
+  <td height="19" width="156" align="center">  <b><i>IPTTLDec </i></b> </td>
+  <td height="19" width="287" align="left"> Attempts to decrement the Time-To-Live field of the IP header.</td> 
+  <td height="19" width="82" align="center"> <a href="descr/IPTTLDec.html">[details]
+  </a></td>
+</tr>
+<tr><td height="19" width="172" align="center">  <b><i>ICMP Processing</i></b></td>
+  <td height="19" width="156" align="center">  &nbsp;</td>
+  <td height="19" width="287" align="left"> &nbsp;</td> 
+  <td height="19" width="82" align="center"> &nbsp;</td></tr>
+<tr><td height="19" width="172" align="center">  &nbsp;</td>
+  <td height="19" width="156" align="center">  <b><i>ICMPDemux </i></b> </td>
+  <td height="19" width="287" align="left"> Demultiplexes local ICMP packets based on Type field </td> 
+  <td height="19" width="82" align="center"> <a href="descr/ICMPDemux.html">[details]
+  </a></td></tr>
+<tr><td height="19" width="172" align="center">  &nbsp;</td>
+  <td height="19" width="156" align="center">  <b><i>ICMPEcho</i></b></td>
+  <td height="19" width="287" align="left"> Responds to ICMP echo requests </td> 
+  <td height="19" width="82" align="center"> <a href="descr/ICMPEchoResponder.html"> [details] </a></td></tr>
+<tr><td height="19" width="172" align="center">  &nbsp;</td>
+  <td height="19" width="156" align="center">  <b><i>ICMPTTLExpired </i></b> </td>
+  <td height="19" width="287" align="left"> Generates ICMP TTL-expired packets </td> 
+  <td height="19" width="82" align="center"> <a href="descr/ICMPTTLExpired.html"> [details] </a></td></tr>
+<tr><td height="19" width="172" align="center">  &nbsp;</td>
+  <td height="19" width="156" align="center">  <b><i>ICMPPortUnreach</i></b> </td>
+  <td height="19" width="287" align="left">  Generates ICMP Port-unreachable packets </td> 
+  <td height="19" width="82" align="center"> <a href="descr/ICMPPortUnreach.html"> [details] </a></td></tr>  
+<tr><td height="19" width="172" align="center">  <i><b>Queues</b></i></td>
+  <td height="19" width="156" align="center">  &nbsp;</td>
+  <td height="19" width="287" align="left"> &nbsp;</td> 
+  <td height="19" width="82" align="center"> &nbsp;</td></tr>
+<tr>
+  <td height="19" width="172" align="center">  &nbsp;</td>
+  <td height="19" width="156" align="center">  <b><i>ByteQueue </i></b> </td>
+  <td height="19" width="287" align="left"> A simple drop-tail FIFO queue measuring its size in bytes </td> 
+  <td height="19" width="82" align="center"> <a href="descr/Queue.html"> [details] </a></td>
+</tr>
+<tr><td height="19" width="172" align="center">  &nbsp;</td>
+  <td height="19" width="156" align="center">  <b><i>REDQueue</i></b></td>
+  <td height="19" width="287" align="left"> A queue implementing the Random 
+  Early Detection (RED) queuing mechanism</td> 
+  <td height="19" width="82" align="center"> <a href="descr/REDQeueue.html">
+  [details]</a><p>&nbsp;</td></tr>
+<tr>
+  <td height="19" width="172" align="center">  <b><i>Auxiliary </i></b> </td>
+  <td height="19" width="156" align="center">  &nbsp;</td>
+  <td height="19" width="287" align="left"> &nbsp;</td> 
+  <td height="19" width="82" align="center"> &nbsp;</td>
+</tr>
+<tr>
+  <td height="19" width="172" align="center">  &nbsp;</td>
+  <td height="19" width="156" align="center">  <b><i>Delay </i></b> </td>
+  <td height="19" width="287" align="left"> Slows down packets passed through it 
+  by a configurable percentage of router speed</td> 
+  <td height="19" width="82" align="center"> <a href="descr/Delay.html">[details]
+  </a></td>
+</tr>
+<tr>
+  <td height="19" width="172" align="center">  &nbsp;</td>
+  <td height="19" width="156" align="center">  <b><i>Loss</i></b></td>
+  <td height="19" width="287" align="left"> Drops packets at a configurable 
+  rate, or at user request </td> <td height="19" width="82" align="center"> <a href="descr/Loss.html"> [details] </a></td>
+</tr>
+<tr>
+  <td height="19" width="172" align="center">  &nbsp;</td>
+  <td height="19" width="156" align="center">  <b><i>Tee</i></b></td>
+  <td height="19" width="287" align="left"> Duplicates packets on a single input 
+  and sends them out two outputs</td> <td height="19" width="82" align="center"> <a href="descr/Tee.html"> [details] </a></td>
+</tr>
+<tr>
+  <td height="19" width="172" align="center">  &nbsp;</td>
+  <td height="19" width="156" align="center">  <b>Capture</b></td>
+  <td height="19" width="287" align="left">  Dumps Packets in PCAP file format </td> 
+  <td height="19" width="82" align="center"> <a href="descr/Capture.html"> [details] </a></td>
+</tr>
+
+</table>
+</center>
+
+<p>&nbsp;</p>
+
+
+</div>
+
+<div id="footer">
+<!-- <hr><br> -->
+<div>Clack, <a href="http://www.clackrouter.net">www.ClackRouter.net</a>, and <a href="http://yuba.stanford.edu/vns/">The Virtual Network System</a> are operated by</div>
+
+<div><a href="http://klamath.stanford.edu/">The High Performance Networking Group</a> at <a href="http://www.stanford.edu/">Stanford University</a></div>
+<!-- Valid <a href="http://validator.w3.org/check?uri=referer">XHTML 1.0</a>, <a href="http://jigsaw.w3.org/css-validator/check/referer">CSS</a> -->
+
+<div>Website last updated 9/22/05</div>
+</div>
+
+
+</body>
+</html>

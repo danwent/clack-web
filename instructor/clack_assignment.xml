@@ -1,0 +1,10 @@
+<assignment>
+<problem    type="mc" 
+		question="1) what is your name?"
+		options="Dan:George:Wolf:Vyass"
+		answer="2" /> 
+<problem 	type="long"
+		question="2) Why should we leave Iraq?l dkljfakdlsjfkl  jasdkj  kdjjjkj this should be more than one line"
+		answer="Because we are in the middle of a civil war there" />
+
+</assignment>

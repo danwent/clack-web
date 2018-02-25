@@ -1,0 +1,565 @@
+<html><head>
+<title>  Clack Graphical Router: RIP Routing Assignment </title>
+
+    <style type="text/css">
+       PRE { background-color: LIGHTGREY; }
+       H3 { font-size: 150%; background-color: LIGHTGREEN; font-variant: small-caps; }
+       H4 { font-size: 120%; font-variant: small-caps; }
+    </style></head><body> 
+
+<p style="text-align: center;" align="center"><b><span style="font-size: 23.5pt; color: navy;">Implementing the Routing Information 
+Protocol (RIP)<br>
+</span></b></p>
+
+<center>
+<table width="85%"> 
+<tr>
+<td>
+
+<h2 style="margin-top: 12px; margin-bottom: 0pt;" align="left"><b><font size="4">
+<a href="#overview">Overview</a></font></b></h2>
+<h2 style="margin-top: 12px; margin-bottom: 0pt;" align="left"><b><font size="4">
+<a href="#rip">RIP Summary</a></font></b></h2>
+<h2 style="margin-top: 12px; margin-bottom: 0pt;" align="left"><font size="4">
+<a href="#buildingclack">Building and Running Clack </b></a></font></h2>
+<h2 style="margin-top: 12px; margin-bottom: 0pt;" align="left"><b><font size="4">
+<a href="#clackbasics">Basics of Coding within Clack </b></a></font></h2>
+<h2 style="margin-top: 12px; margin-bottom: 0pt;" align="left"><b><font size="4">
+<a href="#apis">Clack API's for Routing and RIP </b></a></font></h2>
+<h2 style="margin-top: 12px; margin-bottom: 0pt;" align="left"><b><font size="4">
+<a href="#debugging_and_dev">Debugging &amp; Development Tips </b></a></font></h2>
+<h2 style="margin-top: 12px; margin-bottom: 0pt;" align="left"><b><font size="4">
+
+Quick Links:
+&nbsp; </font><font size="3"><a href="http://www.clackrouter.net/help">
+Intro to Clack</a>&nbsp;
+&nbsp; </font><font size="3"><a href="http://www.clackrouter.net/rip/clack_rip.zip">Assignment 
+Code</a>&nbsp;
+&nbsp; <a href="http://www.faqs.org/rfcs/rfc1058.html">RFC 2453 (RIP)</a>&nbsp;&nbsp; <a href="http://www.clackrouter.net/">Clack Demo</a>&nbsp;&nbsp;
+<a href="http://www.clackrouter.net/javadoc/">Clack APIs</a>&nbsp;&nbsp; </font>
+</b></h2>
+<p style="line-height: 150%; margin-top: 0pt; margin-bottom: 0pt;" align="left">&nbsp;</p>
+<hr>
+<h3><a name="overview"></a>Overview</h3>
+<p align="left">In this assignment, you will implement a simplified version of the
+Routing Information Protocol (RIP); a simple intra-domain routing
+protocol used in some Internet networks. You will implement and test your routing protocol 
+within a virtual network environment called <a href="http://www.clackrouter.net">Clack</a>. Clack lets
+you build a (or in our case, part of a) fully-functional router in Java and has a graphical interface that
+enables you to <span style="font-style: italic;">visualize</span> the 
+flow of packets both between and within each router.
+</p>
+<p align="left">We will provide you with a network of Clack routers that
+already contain components to do all packet forwarding, but have no 
+entries in their routing tables.  
+You will implement the last component, a piece of code to 
+implement RIP routing and make your router capable of forwarding traffic. 
+By the end of this project your modified Clack router should be able to build its own forwarding
+table from RIP advertisements sent by other routers, send the appropriate
+advertisements to neighboring routers, and route traffic through
+complex topologies containing multiple nodes. <br>
+</p>
+<p>More specifically, each team will be assigned the<i> virtual network</i> 
+shown in the following figure:
+</p>
+
+<img src="network.png" />
+<p> When developing, your code will be be running only on router1, the router
+at the top-left of the network view.  All other routers
+will already be running "reference implementation" of RIP, 
+while the two hosts do not participate in routing.
+You need to implement RIP in your Clack router and make it 
+inter-operate with the other routers.
+When you are done, all routers in the virtual network should 
+be able to use your RIP code on ALL nodes to find any available shortest
+path to any other router, even if links are disabled or link metrics are changed (see below).  
+</p>
+<p> Before explaining more about Clack, we will describe the RIP 
+functionality you must implement for this assignment. </p>
+
+<hr><a name="rip"></a>
+<h3>Routing
+Information Protocol (RIP)</h3>
+<p>This section provides enough details about RIP so that you can implement.
+</p>
+<p>RIP is a routing protocol based on the Bellman-Ford (or distance
+vector) algorithm.&nbsp; RIP has been used as the intra-domain routing
+algorithm in many small-scale&nbsp; autonomous systems (ASes) in the Internet 
+since the early days of the ARPANET. RIP is limited to networks whose 
+longest path (the network's diameter) is 15 hops.&nbsp; RIP version 2 is 
+specified in 
+<a href="http://nsl.cs.surrey.sfu.ca/teaching/06/371/rfc2453.txt">RFC 2453</a>(RIP v2 is backward compatible with RIP v1 
+specified in RFC 1058). We recommend reading the newer <a href="http://nsl.cs.surrey.sfu.ca/teaching/06/371/rfc2453.txt">RFC 2453,</a> but you will NOT implement all
+features supported by RIP version 2.&nbsp; Below is a brief description
+of the protocol (adapted from RFC 2453) that outlines the specific functionality
+your code must support. <br>
+</p>
+<h4 style="margin-top: 12px; margin-bottom: 6px;">RIP Basic Procedure</h4>
+<p style="margin-top: 6px; margin-bottom: 0pt;">At a high level, the basic 
+procedure carried out by every entity (i.e., router) that participates in
+the routing protocol is as follows:&nbsp; <br>
+</p>
+<p>
+<ul style="margin-bottom: 0in;">
+  <li>
+  <p style="margin-top: 6px; margin-bottom: 0pt;"><font face="Times New Roman">Keep a 
+  routing table (or more accurately, a forwarding table) with an entry 
+for every possible destination network.  
+Each routing table entry contains the destination network, the distance D (also called a 'metric' or
+'cost') to reach the destination, and the 'next-hop' router G that is the next
+router on the chosen path to that destination. </font>
+  
+  </p></li><li>
+  <p style="margin-top: 6px; margin-bottom: 0pt;"><font face="Times New Roman">
+Periodically, send a routing update to every neighbor. The update
+is a set of messages that contain all of the information from the
+routing table. It contains an entry for each destination network, with the
+distance to reach that destination, as well as timer information indicating how
+much longer that data should be considered valid. </font>
+  
+  </p></li><li>
+  <p style="margin-top: 6px; margin-bottom: 0pt;"><font face="Times New Roman">
+When a routing update arrives from a neighbor G', add the cost associated with 
+the network (i.e., link) 
+that is shared with G'. (This should be the network over which the
+update arrived.)&nbsp; Call the resulting&nbsp; distance D'. Compare
+the resulting distances with the current routing table entries to that same 
+destination network N. If the
+new distance D' for N is smaller than the existing value D, adopt the
+new route. That is, change the table entry for N to have metric D' and
+router G'. <b>If G' is the router from which the existing route came,
+i.e., G' = G, then use the new metric even if it is larger than the old
+one.</b></font>
+</p></li></ul>
+
+<p>More specifically, each node maintains a routing table, with each entry 
+contains at least the following information:</p>
+<ul style="margin-bottom: 0in;">
+  <li>
+<p style="margin-top: 6px; margin-bottom: 0pt;"><b>Destination address:</b>  
+RIP represents destination networks by 
+a "network address" and a corresponding "network mask", both of which
+are IPv4 addresses.  Commonly, the network address and mask together are 
+referred to as a "network prefix" and written as X.X.X.X / Y, where X.X.X.X is
+the network address and Y is the length in bits of the network mask.  
+  </p></li><li>
+<p style="margin-top: 6px; margin-bottom: 0pt;"><b>Metric:</b> 
+Total cost of getting a datagram&nbsp; from the router
+to that destination network.&nbsp; This metric is the sum of the costs
+associated with the networks that would be traversed to get&nbsp; to
+the destination. </p></li><li>
+<p style="margin-top: 6px; margin-bottom: 0pt;"><b>Next hop:</b> The IPv4 address of the next router
+along the path to the destination. If the destination is on one
+of&nbsp; the directly-connected networks, this item is not needed. </p></li>
+<li>
+<p style="margin-top: 6px; margin-bottom: 0pt;"><b>Time-to-Live Value (TTL):</b>
+Timer information to determine when routing information is stale.  </p></li>
+</ul>
+<p>The entries for the directly-connected networks are set up by the router
+using information gathered by means not specified in this&nbsp;
+protocol.&nbsp; The metric for a directly-connected network is set to
+the cost of that network. Typically, 1 is the used as the network
+cost.&nbsp; In that case, the RIP metric reduces to a simple
+hop-count.&nbsp; More complex metrics may be used when it is
+desirable to show preference for some networks over others (e.g.,
+to indicate of differences in bandwidth or reliability).</p>
+<p> </p>
+<h4 style="margin-top: 12px; margin-bottom: 6px;">Split Horizon with Poisoned Reverse</h4>
+<p style="margin-top: 6px; margin-bottom: 6px;">To prevent routing loops involving 
+two nodes from occurring and to
+accelerate convergence in case of link cost changes, RIP uses a scheme
+called "split horizon with poisoned reverse." The simple split horizon
+scheme omits routes learned from one neighbor in updates sent to that
+neighbor. Split horizon with poisoned reverse includes such routes in
+updates, but sets their metrics to infinity (infinity is typically set
+to 16, since the maximum path limit in RIP is 15).
+</p>
+<h4 style="margin-top: 12px; margin-bottom: 0pt;">Triggered Updates<br>
+</h4>
+<p style="margin-top: 6px; margin-bottom: 6px;">Split horizon with
+poisoned reverse will prevent any routing loops that involve only two
+routers.&nbsp; However, it is still possible to end&nbsp; up with
+patterns in which three routers are engaged in
+mutual&nbsp;deception.&nbsp; For example, A may believe it has a route
+through B, B&nbsp; through C, and C through A.&nbsp; Split horizon
+cannot stop such a loop. This loop will only be resolved when the
+metric reaches infinity and&nbsp; the network involved is then declared
+unreachable.&nbsp; Triggered updates are an attempt to speed up this
+convergence.&nbsp; To get triggered updates, we simply add a rule
+that whenever a router
+changes the metric for a route, it is required to send update
+messages almost&nbsp; immediately, even if it is not yet time for one
+of the regular update message. </p>
+<h4>Message Format</h4>
+<p style="margin-top: 6px; margin-bottom: 6px;">
+Our simplified RIP protocol uses the IP layer directly to transmit updates to neighbors.  Each RIP update
+contains one or more <i>entries</i>, each of which corresponds to a single network being advertised by
+some router (note: in your topology, networks correspond to links between routers, or between
+routers and hosts).  Each entry
+contains four fields, depicted below.  The Network Address and Network Mask together define the network
+being advertised by this entry.  The Metric field describes the cost of reaching that network
+according to the router creating the update packet.  Likewise, the TTL field is the time-to-live 
+field for that advertisement, according to the router creating the update.  
+</p>
+<p>
+<img src="rip_update.gif"/>
+</p>
+
+<h4>Timers</h4>
+<p>RIP has several types of timers for sending periodic updates, 
+timing out routes and actually removing routes from the routing table, see <a href="http://nsl.cs.surrey.sfu.ca/teaching/06/371/rfc2453.txt">RFC 2453</a> for details. However, you will implement the 
+following <i>simpler</i> timers. </p>
+  <ul style="margin-bottom: 0in;">
+    <li><b>Periodic updates:</b> Every <b>10</b> seconds, the RIP process sends an 
+    unsolicited Response message containing the complete routing table to every neighboring router. </li>
+    <li>
+    <p style="margin-top: 6px; margin-bottom: 0pt;"><b>Route timeout:</b> RIP 
+    maintains a TTL (time to live) field for each <i>dynamic</i> route (i.e.,
+    a route learned from a neighboring router. Local
+    routes, which are directly connected networks, have an invalid TTL of -1).
+    When a router announces a local route to a neighbor, it sets the TTL to
+    <b>20</b> seconds in the update.  When a router places a new route in its
+    routing table, it uses the TTL value from the routing update.  If a router
+    sees an update containing a destination/next-hop pair 
+    that it is already using, it updates the TTL for that entry in its
+    local routing table.    
+     Every <b>1</b> second, RIP 
+    decrements the TTL of all dynamic routes. If a TTL of a route reaches <b>0</b>, the route 
+    is removed from the routing table.&nbsp;&nbsp; <br> &nbsp;
+  </p></li></ul>
+  <hr><a name="buildingclack"></a>
+<h3> Building and Running Clack </h3> 
+
+<p> In this assignment, you will be programming within a virtual networking environment called Clack.
+Clack provides a graphical view of a virtual network
+of routers and allows you to explore inside a router to see
+what is going on. 
+</p>
+<p>
+While you do not need to become a Clack expert to succeed at this
+assignment, spending 10 or 15 minutes up-front at <a href="http://www.clackrouter.net">
+http://www.clackrouter.net </a> will save you time in the long-run.  
+Particularly, the <a href="http://www.clackrouter.net/help">
+Clack Help Page </a> provide an overview of how Clack works: <b> Read that page before continuing </b>. 
+Additionally, the advanced features on that page will make it much easier to visually debug your 
+routing code in an efficient manner.
+
+<h4> Unpacking the Code </h4>  
+
+Unzip your clack_rip.zip archive. It should contain the following files:
+<ol>
+<li> <p><i> clack-1.5.jar </i> : The JAR file containing the Clack library 
+</p></li>
+<li> <p><i> reference.topo </i> :  A Clack configuration file that will load Clack 
+with <em> ALL </em> routers running the <em>reference</em> implementation of RIP. 
+</p></li>
+<li> <p><i> development.topo </i> : A Clack configuration file that will load Clack with 'router1' 
+running <em> YOUR </em> 
+implementation of RIP, and with all other routers running the reference implementation. 
+</p></li>
+<li> <p><i> finaltest.topo </i> :  A Clack configuration file that will load Clack with <em> ALL </em> 
+routers running <em> YOUR </em> implementation of RIP. 
+</p></li>
+<li> <p><i> RIPRouting.java </i> : The java file for your implementation of RIP.  
+It already contains the basic boiler-plate for
+required for Clack components and some initial functionality to get you started.  
+</p></li><li> <p><i> RIPClackLoader.java </i> : A java file to load Clack and make it 
+aware of your new RIP functionality.   
+</p></li></ol>
+<p>  <i> The only file of these you will need to modify at any time is RIPRouting.java </i> 
+You do NOT need to understand the internals of
+either the configuration files or the RIPClackLoader class.  </p> 
+
+<h4> Running Clack </h4>
+
+<ol>
+
+<li> <p> To test your java runtime setup, we will now try to run Clack
+without any of your RIP specific code.  Run Clack with :
+</p><pre>java -cp clack-1.5.jar net.clackrouter.gui.ClackLoader -f reference.topo
+</pre> You should see Clack load and connect, presenting you with a
+view of your network. If not, make sure that Java is properly installed.
+</li>
+<li> <p> Now we want to run Clack using the RIPRouting component that you can modify.  
+First, build the two java file using: </p>
+<pre>javac -cp clack-1.5.jar *.java 
+</pre> 
+<p>If this fails, you may have to update to 
+a newer version of your Java compiler (version 1.4 or above). </p>
+<p> Now run your version of Clack with a network configuration file 
+(we choose development.topo in this case):
+</p><pre>java -cp .:clack-1.5.jar RIPClackLoader -f development.topo  
+</pre>
+<p> <b> Important: </b> Notice the addition of the current directory 
+(i.e., ".") to the classpath. On windows, you may need to use a semi-colon
+";" instead of a colon to separate entries in the class-path. </p>
+
+<p>
+This loads a network of Clack routers, with 'router1' using your RIP implementation
+and all other routers using the reference implementation. 
+Notice that the console output includes statements contained within your
+RIPRouting.java file.  Clack should indicate an error on 'router1', which drops each RIP
+packet is receives.  </li>
+</ol> 
+
+This is all you need to know about compiling and running Clack so that you 
+can add your own RIP functionality.  
+
+<a name="clackbasics" />
+<h3> The Basics of Coding within Clack </h3>  
+
+
+<p> Using the "development.topo" configuration file, router1 will be fully configured 
+with Clack components to make a full router, except that the <i>RIPRouting</i> component
+will be a stub that you must complete.
+The <i>RIPRouting</i> component has one input port for accepting routing packets and one output port 
+for sending routing packets. </p> 
+
+<p>  The <a href="http://www.clackrouter.net/javadoc/"> Clack Javadoc </a> will be essential
+in understanding and using Clack APIs.  
+
+<h4> Handling Packets within Clack </h4>
+
+<p> Packets within Clack are represented by Java objects that expose the contents of a packet
+at a particular level of encapsulation.  For example, 
+you will be dealing exclusively with packets of the type
+<a href="http://www.clackrouter.net/javadoc/net/clackrouter/packets/IPPacket.html"> IPPacket </a>
+ or 
+<a href="http://www.clackrouter.net/javadoc/net/clackrouter/packets/RIPRoutingUpdate.html">
+RIPRoutingUpdate </a>.  Each component within a Clack router accepts packets objects on input
+ports, and passes those (potentially modified) packets to other router components via output ports.  
+</p>
+<p>
+Its important that you get to understand the 
+<a href="http://www.clackrouter.net/javadoc/net/clackrouter/packets/RIPRoutingUpdate.html">
+RIPRoutingUpdate </a> class well, including its child class 
+<a href="http://www.clackrouter.net/javadoc/net/clackrouter/packets/RIPRoutingUpdate.Entry.html">
+RIPRoutingUpdate.Entry </a>.  A <i>RIPRoutingUpdate</i> packet represents a RIP update sent from 
+one router to another and contains a <i>RIPRoutingUpdate.Entry</i> 
+for each advertised network contained in the routing announcement.    
+</p>
+<p>
+When your RIPRouting component receives or sends a packet, it will be a <i>IPPacket</i>
+with RIP data as its payload.   
+You can extract a RIPRoutingUpdate object from an IPPacket using:
+<pre>
+	IPPacket ip_packet = ....; 
+	RIPRoutingUpdate update = new RIPRoutingUpdate(ip_packet.getBodyBuffer());
+</pre>
+Outgoing RIPRoutingUpdate packets can be encapsulated in 
+IP using the static 
+<a href="http://www.clackrouter.net/javadoc/net/clackrouter/packets/IPPacket.html#wrap(net.clackrouter.packets.VNSPacket,%20byte,%20java.nio.ByteBuffer,%20java.nio.ByteBuffer)"> IPPacket.wrap() </a> 
+method, which returns an IP packet with the 
+supplied RIP packet as payload.  For example:
+</p>
+<pre>
+	InetAddress src, dst = .... ;
+	RIPRoutingUpdate update = new RIPRoutingUpdate();
+	VNSIPPacket ip_packet = VNSIPPacket.wrap(update, VNSIPPacket.PROTO_CLACK_RIP, src, dst);
+</pre> 
+<h4> Implementing Your RIP Component 
+</h4>
+
+Each Clack component is a Java object that extends the base class 
+<a href="http://www.clackrouter.net/javadoc/net/clackrouter/component/base/ClackComponent.html" > 
+ClackComponent</a>.  These component pass packets from one component to another in order to 
+implement all router functionality.  
+</p>
+<p>
+Your RIP component has only a single input port to receive packets.  It receives all IP traffic addressed
+to a router interface that does not have the protocol type of: TCP, UDP, or ICMP.
+It receives these packets from the <i>L3Demux</i> component.  
+To receive packets your component implements the 
+<a href="http://www.clackrouter.net/javadoc/net/clackrouter/component/base/ClackComponent.html#acceptPacket(net.clackrouter.packets.VNSPacket,%20int)"> ClackComponent.acceptPacket </a> method:
+ 
+</p><pre>
+    	public void acceptPacket(VNSPacket packet, int port_number) {
+    		if(port_number != PORT_UPDATE_IN) return;
+    	
+    	       	IPPacket ip_packet = (IPPacket)packet;
+    	
+		// now look inside IP header and payload ... 	
+	}
+	
+</pre>  
+
+<p> <b> NOTE: </b>
+Your RIP component's input port will only accept packets of the class IPPacket, so the cast from
+VNSPacket to IPPacket is always safe.  
+</p>
+<p>
+To send packets to other components, you "push" them out a different port.  
+In the case of the RIP component, its only output port is connected to the IPRouteLookup 
+component in charge of forwarding all IP packets for that router. 
+This means that to send a RIP update, you must encapsulate it in an IPPacket with correct source and 
+destination addresses, then push it through the "out" port using the 
+<a href="http://www.clackrouter.net/javadoc/net/clackrouter/component/base/ClackComponent.html#sendOutPort(net.clackrouter.packets.VNSPacket,%20int)"> ClackComponent.sendOutPort </a> method:  
+</p>
+
+<pre>
+	VNSIPPacket ip_packet = (VNSIPPacket)packet;
+	sendOutPort(ip_packet, PORT_UPDATE_OUT);
+		
+</pre> 
+<a name="apis"></a>
+<h3>  Routing and RIP API's </h3>  
+<p>
+Most code that you will need for this assignment is in the 
+<a href="http://www.clackrouter.net/javadoc/net/clackrouter/routing/package-summary.html" > 
+net.clackrouter.routing </a> package.  We outline the classes here, see the javadoc for more
+in-depth details:
+</p>
+
+<ul>
+<li>      
+<b><a href="http://www.clackrouter.net/javadoc/net/clackrouter/routing/package-summary.html">
+RoutingTable </a>:</b><br/>
+Your skeleton RIPRouting component already has an instance variable <i>mRtable</i>, which 
+allows you to add and remove routes from your routing table.  Information is communicated to and from
+the routing table using the 
+<a href="http://www.clackrouter.net/javadoc/net/clackrouter/routing/RoutingEntry.html"> RoutingEntry </a> 
+interface.  
+</li>
+<li>
+<b><a href="http://www.clackrouter.net/javadoc/net/clackrouter/routing/RIPRoutingEntry.html"> 
+RIPRoutingEntry </a> : </b><br/>
+Specifically, you will be using a sub-class of <i>RoutingEntry</i>,
+<i>RIPRoutingEntry</i>.  It includes fields for all information that you will need to include
+for each entry in a RIP routing table.  
+</li>
+<li>
+<b><a href="http://www.clackrouter.net/javadoc/net/clackrouter/routing/LocalLinkInfo.html" > LocalLinkInfo </a>: 
+</b><br/>
+This is a data-structure that holds information about a single local link.  
+From within any <i>RIPRouting</i> method, you can get access to a 
+Hashtable of LocalLinkInfo objects, use the call:
+<pre>
+	Hashtable local_links = getRouter().getLocalLinkInfo();
+</pre>
+</li>
+<li> <b> <a href="http://www.clackrouter.net/javadoc/net/clackrouter/routing/LocalLinkChangedListener.html">
+LocalLinkChangedListener</a>:</b>  This is a simple call-back interface already set-up for you in the 
+starter code.  Your RIP component's <i>localLinkChanged()</i> method will be called any time a 
+a link connected to that router is disabled/enable, or has its metric changed.    
+</li>
+<li> <b><a href="http://www.clackrouter.net/javadoc/net/clackrouter/router/core/Alarm.html"> Alarm</a> :</b>
+You will need timers to know when to send out periodic updates and decrement TTL values
+for routing table entries.  The <i>ClackComponent</i> class supports timers using the <i>Alarm</i>
+interface.  An example is provided in the starter code.  An alarm must be rescheduled
+in order to implement a periodic timer.  
+</li>
+</ul>
+
+<hr>
+
+
+<a name="debugging_and_dev"></a>
+<h3> Debugging & Development Tips </h3>  
+
+<p> 
+Again, we stress the important of reading the 
+<a href="http://www.clackrouter.net/help/"> Clack Introduction </a> help page.
+Of particular interest will be:
+<ul>
+<li> The ability to see routing tables in the
+network level view (the <img src="fib.gif"> button).
+<li>  How Clack signals that an error has occurred within some network 
+component.
+<li> Slowing and pausing time within the Clack network. 
+<li> Using the <a href="http://www.ethereal.com/"> Ethereal</a>-like 
+packet analyzer that is built into Clack.  
+<li> Using the new "All-Pairs Reachability" test to automatically tell
+if your routing set-up is working correctly.  
+</ul>
+ 
+These tools are simple to use and will make this project much easier.  
+</p>
+
+<h4> Using the Clack Shell </h4>
+
+<p> You will need to use the Clack Shell, a simple command-line interface,
+to test your RIP implementation.  The Clack Shell mimics a shell you would
+find on any unix computer, and is described <a href="http://www.clackrouter.net/help/help.html#shell">
+here </a>. </p>
+
+<p> First, you will use the 'ping' command to generate traffic to test 
+whether you have all of the valid forwarding entries installed.  
+Click on the <img src="konsole.png"> button and select a particular host 
+in order to "log into" a shell on that host.  Then ping any of the IP addresses
+in your network.  Ping well tell you whether those pings where successful,
+and you can use the network view to see how packets are forwarded across the
+network.  
+</p>  
+
+<p>You'll also need the shell to change link characteristics using the <i> ifconfig </i> 
+commend. </p>
+
+<p> Enable/disable a link by specifying the router interface that is connected to that link 
+(double-clicking on the link in the network view also works): </p>
+<pre>	ifconfig eth2 up  
+	ifconfig eth1 down
+</pre>
+<p> Change the metric (cost) for a router to use a particular link, again by specifying the local interface of that link </p>
+<pre>	ifconfig eth2 metric 10
+</pre>
+<p> View the status of each interface, including current up/down status and link metrics, etc.  </p>
+<pre>	ifconfig all
+</pre>
+<p>
+<b>Note:</b> 
+There is a subtle difference between using the shell to enable/disable a link and using the shell to change
+a link's metric. The action of enabling or disabling a
+link affects routers on both ends of the link, causing the <i>localLinkChanged()</i> methods of
+both routers to be called.  
+Conversely, the act of changing a weight affects only the local router. </p>
+
+<h4> Printing Output </h4>
+
+<p> Your RIPRouting component already comes with a convenience method <i> dumpRIPRoutingTable() </i>
+to print a routing table to standard
+out on your machine and you can of course always dump additional debugging output to standard out. 
+Additionally, each component has its own
+individual log, which can be viewed by double-clicking the component
+and using the "log" tab at the bottom of the property view. As a
+programmer, you can use either the <i> log(String s) </i> or <i> error(String s)
+</i> methods of the ClackComponent class to write to the log. The
+difference between the two is that the latter also writes the String to
+standard error and cause the component to propagate a visual error in the GUI.
+</p> 
+ 
+<h4> Development Tips </h4>
+
+<ul>
+
+<li> <p>Remember to use the .equals() functionality when testing for equality with objects such a String or InetAddress .  
+Using == will simply check pointer equality. 
+</p></li>
+
+<li> <p> Using an IDE, such as <a href="http://www.eclipse.org"> Eclipse </a>, 
+with syntax completion
+can speed things up significantly when you are working with an
+unfamiliar API. Many IDE's also have graphical debugging and exception
+handling capabilities. </p></li>
+
+<li> <p>If you are not familiar with some of the standard Java classes used in Clack (e.g., InetAddress
+or Hashtable), use the <a href="http://java.sun.com/j2se/1.4.2/docs/api/"> Java API docs </a>.
+</p>
+</li>
+
+<li> <p> In-depth information about creating components for Clack is available in the 
+<a href="http://www.clackrouter.net/hack_clack.pdf"> Clack Developer Doc </a>.</p></li>
+
+</ul>
+</td>
+</tr>
+</table>
+</center>
+<br/>
+<hr>
+<center>
+<b> Suggestions for improvements?  Other Comments?  Please let us know at: 
+<a href="mailto:feedback@clackrouter.net"> feedback@clackrouter.net </a> .  
+</b>
+</center>
+
+</body></html>

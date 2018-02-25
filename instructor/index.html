@@ -1,0 +1,128 @@
+
+
+<html>
+    <STYLE type="text/css">
+       PRE { background-color: LIGHTGREY }
+       H3 { background-color: LIGHTGREEN }
+    </STYLE>
+
+<title> Clack Graphical Router Instructor Resources </title> 
+<body> 
+
+<!--RiteCounter-->
+<script type="text/javascript" src="http://www.ritecounter.com/c/12/11834.js"></script>
+<noscript><a href="http://www.ritecounter.com"><img src="http://www.ritecounter.com/scripts/htmlc.php?id=11834" alt="Invisible Hit Counter" border=0></a></noscript>
+<!--END RiteCounter-->
+
+<center><a href="../index.html">  <img src="http://www.clackrouter.net/logo7.gif" /> </a> </center>
+
+<center><h2> Clack Graphical Router: Instructor Resources </h2></center>
+
+<center>
+<table width="90%">
+<tr>
+<td>
+<p> This page aims to give course instructors and staff an idea of the different
+ways Clack has already been succesfully used in undergraduate networking
+courses at several universities.  We will help modify assignments to fit your needs. 
+</p>
+<p> If you are an instructor and are interested in using Clack for any
+of the uses described below, or have an idea for a new use of Clack,
+please contact us at info (at) clackrouter.net 
+</p>
+<h2> Existing Assignments, Demo's, and Labs </h2> 
+
+<h3>  IP, ARP, and Ethernet Basics </h3> 
+
+Students use Clack and its ethereal packet sniffer to answer questions 
+about the about simple encapsulation and forwarding.  See 
+<a href="section1.html"> IP Basics </a>.  
+
+<h3>  IP Addressing and Routing </h3> 
+
+Students are given a Clack network of a few routers and 
+several "subnets", without any IP addresses assigned.  Given a
+/24 of network address space, the students must assign each subnet
+sufficient address space for its size requirements, and then set-up
+forwarding entries within the routers to make all subnets reachable.
+Configuration can be done either graphically
+or via a Clack command-line that emulates Unix functionality.
+See <a href="section2.html"> IP Addressing and Routing </a>.  
+
+<h3> Comparing Distance Vector (RIP) and Link-state (OSPF) Routing </h3>
+
+Students are provided with identical virtual networks, one with each router
+using OSPF, and another with each router running RIP.  Students must view
+routing tables and use a packet sniffer to determine how RIP and OSPF 
+operate differently given various network dynamics (e.g., link failure).
+See <a href="section3.html"> RIP vs. OSPF </a>.  
+
+<h3> RIP Routing Programming Assignment </h3>
+
+<p> Simon Fraser University used Clack as a programming platform to have 
+student implement a simple version of the RIP routing protocol, including
+split horizon and poison reverse.  Clack let students see the real-time 
+routing tables their implementation was using, probe their topology to test
+forwarding, and modify link status + cost to see the protocol react.  
+The write-up for the RIP assignment is available <a href="rip.html"> here </a> . </p>
+
+<p> For obvious reasons, the RIP source-code is not distributed with the 
+standard Clack source.  If you are an instructor and wish to see the 
+reference implementation of RIP in Clack, email us at info@clackrouter.net </p>
+
+<p>A topology of RIP routers can be found here:  
+<a href="../livedemo/rip_demo.html"> RIP Topology </a> 
+</p>
+
+<h3> TCP and UDP Congestion Control </h3> 
+
+An introduction to Computer Science for non-majors class at Princeton
+University used Clack to teach students high-level concepts about congestion
+control on the Internet, focusing on the differences between TCP and UDP.
+A draft of the lab, which had students analyze TCP downloads and real-time 
+streaming music, is available <a href="princeton_lab.pdf"> here </a> 
+(PDF format).  
+
+<h3> OSPF Routing Programming Assignment </h3>
+
+<p> Clack now has a link-state routing implementation that can be used as
+a basis for networking labs and programming assignments.  As described above
+in the RIP lab, Clack provides a powerful platform to demonstrate the 
+concepts that students must implement, and then to debug their code
+as they implement a very simple version of OSPF while 
+leveraging Clack visualization capabilities for free. </p> 
+<p>A topology of OSPF routers can be found here:  
+<a href="../livedemo/ospf_demo.html"> OSPF Topology </a> 
+</p>
+
+<h3> Looking Inside a Real IP Router </h3>
+
+Several universities have used Clack to demonstrate the basic composition of
+an IP router, and to have students visualize how traffic is forwarded 
+through a router and how the router responds to probes such an Ping and 
+Traceroute requests.  Primarily, Clack is used in conjunction with an
+<a href="http://yuba.stanford.edu/vns/assignments/cs244a_router.html"> 
+assignment </a> in which student program a simple IP router in C using the
+<a href="http://yuba.stanford.edu/vns/">Virtual Network System </a>.  
+
+
+<h3> Network Address Translation (NAT) Visualization </h3>
+
+A simple lab to help students understand how NAT works, to visualize what
+state a router must keep, and test what traffic can and cannot pass through
+a NAT.  Implementation complete, demo link and write-up coming soon...
+
+<h3> RED Queue Visualization </h3> 
+
+<p> Visualize how modifying Random Early Drop (RED) paramters impacts
+the drop decision.  Implementation is complete, demo link and write-up
+coming soon... </p>
+<br/>
+<br/>
+<br/>
+</td>
+</tr>
+</table>
+</center>
+</body> 
+</html>

@@ -1,0 +1,310 @@
+
+<!DOCTYPE html PUBLIC 
+  "-//W3C//DTD XHTML 1.0 Strict//EN" 
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>Clack Graphical Router: An Open Source Visualization 
+Tool for Network Education</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <meta http-equiv="Content-language" content="en" />
+  <meta name="author" content="Jonathan Effrat, Dan Wendlandt" />
+  <style type="text/css" media="all">@import "main.css";</style>
+  <script type="text/javascript">
+/* rollover code generated at: http://www.websitegoodies.com/enhance/mouseover.shtml */
+function rollover() {
+  if (!document.getElementById) return
+  var imgUpSrc;
+  var imgOverSrc;
+  var imgRPreload = new Array();
+  var imgDPreload = new Array();
+  var images = document.getElementsByTagName('img');
+  for (var i = 0; i < images.length; i++) {
+    if (images[i].getAttribute('rsrc') && images[i].getAttribute('dsrc')) {
+      imgRPreload[i] = new Image();
+      imgRPreload[i].src = images[i].getAttribute('rsrc');
+      
+      imgDPreload[i] = new Image();
+      imgDPreload[i].src = images[i].getAttribute('dsrc');
+      
+      images[i].onmouseover = function() {
+        imgUpSrc = this.getAttribute('src');
+        this.setAttribute('src',this.getAttribute('rsrc'))
+      }
+      
+      images[i].onmouseout = function() {
+        this.setAttribute('src',imgUpSrc)
+      }
+      
+      images[i].onmousedown = function() {
+      	imgDownSrc = this.getAttribute('rsrc');
+      	this.setAttribute('src',this.getAttribute('dsrc'))
+      }
+      
+      images[i].onmouseup = function() {
+      	this.setAttribute('src',imgDownSrc)
+      }
+      
+    }
+  }
+}
+  
+/* e-mail obfuscation adapted from code by Jason Johnston: http://lojjic.net/blog/20030828-142754.rdf.html */
+function linkEmail() {
+  if(!document.getElementsByTagName) return;
+  var allElts = document.getElementsByTagName("*");
+  if(allElts.length == 0 && document.all) 
+    allElts = document.all; //hack for IE5
+  for(var i=0; i<allElts.length; i++) {
+    var elt = allElts[i];
+    var className = elt.className || elt.getAttribute("class") 
+      || elt.getAttribute("className");
+    if(className && className.match(/\be-mail\b/)
+        && elt.firstChild.nodeType == 3) {
+      var addr = elt.firstChild.nodeValue;
+      addr = addr.replace(/\ \(at\)\ /i, "@")
+                 .replace(/\ (dot|period)\ /gi, ".");
+      var lnk = document.createElement("a");
+      lnk.setAttribute("class","email")
+      lnk.setAttribute("href","mailto:"+addr);
+      lnk.appendChild(document.createTextNode(addr));
+      elt.replaceChild(lnk, elt.firstChild);
+    }
+  }
+}
+
+  </script>
+  
+</head>
+
+<body onLoad="rollover(); linkEmail()">
+<!--RiteCounter-->
+<script type="text/javascript" src="http://www.ritecounter.com/c/12/11834.js"></script>
+<noscript><a href="http://www.ritecounter.com"><img src="http://www.ritecounter.com/scripts/htmlc.php?id=11834" alt="Invisible Hit Counter" border=0></a></noscript>
+<!--END RiteCounter-->
+
+<div id="body">
+
+
+<center>
+<img src="title3.gif">
+<br/>
+<br/>
+<table cellpadding=15 width="85%"> 
+<tr>
+<td width="50%" >
+<center>
+<br/>
+<img src="logo7.gif" alt="clack logo" width="370" height="180" />
+<br/>
+<br/>
+<h3>
+Clack is a virtual network environment for visualizing network behavior 
+and router internals.  
+</h3>
+<h3>
+Targeted for undergraduate students, Clack's 
+intuitive UI and Java implementation makes it easy to use for in-class demos, 
+"lab" homeworks, or as a network programming platform.
+</h3>
+</center>
+</td>
+<td >
+<center>
+<img src="routerview4.jpg" alt="screenshot of router view"/>
+</center>
+</td>
+</tr>
+</table>
+</center>
+
+<center>
+<table width="90%" cellpadding="5">
+<tr>
+<td width="45%" valign="top">
+<div class="mainblock">
+<div class="heading"><center><h2> Instructors </h2></center></div>
+<div class="innerblock">
+<h4>More than 6 different universities have successfully used
+Clack with undergraduate networking courses.  
+For details on currently available assignements, see the
+ <a href="instructor/"> Instructor Resources Page </a>.
+</h4>
+<h4>Please contact us (info (at) clackrouter.net) if you 
+are interested in using Clack.  We are still open to 
+working on new features to support new assignments. 
+</h4>
+</div>
+</div>
+</td>
+<td valign="top" width="45%">
+
+<div class="mainblock">
+<div class="heading"><center><h2>Students</h2></center></div>
+<div class="innerblock">
+<h4>
+Using Clack as a student is usually quite simple, and the demos
+below can help you grasp the basic uses easily.  
+</h4>
+<h4>
+We provide an introduction to both basic and advanced
+Clack features 
+at our <a href="help/"> Help Page </a>.
+</h4>
+
+<h4>  <b> VNS students </b>with a topology ID, click 
+<a href="livedemo/prompt_topo.html"> here </a> ! </h4>
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td valign="top" width="45%">
+
+<div class="mainblock">
+<div class="heading"><center><h2>Demos</h2></center></div>
+<div class="innerblock">
+<h4> 
+You can try out Clack right now without installing anything!  
+Here are a few demos, more coming soon!
+<ul>
+<li> <a href="livedemo/dynamic.html"> Internet Connected Clack Network (basic intro)</a> </li>
+<li> <a href="livedemo/rip_demo.html"> Simple RIP Routing </a> </li>
+<li> <a href="livedemo/ospf_demo.html"> Simple OSPF Routing </a> </li>
+<li> <a href="video.html"> Overview Video of Clack Features  </a> </li>
+</ul> 
+</h4>
+<h4>  Comments? Suggestions?  Please email us at feedback (at) clackrouter.net !
+</h4>
+</div>
+</div>
+
+</td>
+<td width="45%" valign="top">
+
+<div class="mainblock">
+<div class="heading"><center><h2>Developers</h2></center></div>
+<div class="innerblock">
+<h4>Clack is <b> open source </b> and fun to hack on. 
+The <a href="development"> Clack Development page </a> tells you 
+more about potential projects.  
+</h4>
+<h4>If you are planning on adding
+new network functionality to Clack, check out: 
+</h4>
+<ol>
+<li> <h4> Our <a href="hackclack2.pdf"> Developer Guide </a> </h4>
+</li>
+<li> <h4> The most recent <a href="javadoc/">Javadoc </a> </h4> </li>
+</ol>
+</div>
+</div>
+
+
+</td>
+</tr>
+
+<tr>
+<td colspan=2>
+<div class="mainblock">
+<div class="heading"><center><h2>Overview Documents</h2></center></div>
+<div class="innerblock">
+<h4>
+For networking course instructors or developers looking for in-depth 
+information about the Clack Graphical Router, try: 
+</h4>
+
+<table>
+<tr>
+<td>
+<a href="help/"> Clack Introduction </a>
+</td>
+<td>
+A description of basic and advanced Clack features (last updated Feb. '07). 
+</td>
+</tr>
+<td width="25%"> 
+<a href="../clack_short.pdf" > Clack Visualization Paper </a>
+</td>
+<td>
+A 9-page write-up summarizing Clack (presented at ACM SoftVis 
+Sept. '06). 
+</td>
+</tr>
+<tr>
+<td> <a href="../clack_thesis.pdf">Clack Honors Thesis
+</a> 
+</td>
+<td>
+Detailed description of the original Clack design (May '05).
+</td>
+</tr>
+<tr>
+<td>
+ <a href="../hackclack2.pdf"> Developer Documentation
+</a>
+</td>
+<td>
+Describes how to extend Clack with new functionality
+ (last update March '06). 
+</td>
+</tr>
+</table>
+</div>
+</div>
+</td>
+</tr>
+
+
+
+<tr>
+<td colspan=2>
+<div class="mainblock">
+<div class="heading"><center> <h2>Download</h2></center></div>
+<div class="innerblock">
+
+<h4>Clack is built on top of the <a href="http://www.jgraph.com">JGraph</a> Java library and is available under the
+<a href="http://www.gnu.org/copyleft/gpl.html">GNU Public License</a>.
+
+<h4><b>Note: </b> No download is needed to run Clack unmodified.  You can simply <a href="livedemo/dynamic.html"><b>try the demo now</b></a>.  Downloading the binary file is only needed if you plan on 
+adding functionality to Clack as described in the developer documentation.  The source code is provided for those interested in learning the API or making 
+significant modifications, as well as to comply with the GPL.</h4>
+
+<h4><b>Clack Releases:</b></h4> 
+<i>Current release is version 1.5 (Feb. 2007)</i>
+<ul>
+<li>Clack 1.5: <a href="1.5/clack-1.5.zip"><b>Binary</b></a> || <a href="1.5/clack-1.5-src.zip"><b>Source Code</b></a> || <a href="1.5/clack-1.5-docs.zip"><b>Javadoc</b></a>  
+<li>Clack 1.4:
+<a href="1.4/clack-1.4.0.zip"><b>Binary</b></a> || <a href="1.4/clack-1.4.0-src.zip"><b>Source Code</b></a> || <a href="1.4/clack-1.4.0-docs.zip"><b>Javadoc</b></a>
+
+<li>Clack 1.0:
+<a href="1.0/clack-1.0.0.zip"><b>Binary</b></a> || <a href="1.0/clack-1.0.0-src.zip"><b>Source Code</b></a> || <a href="1.0/clack-1.0.0-docs.zip"><b>Javadoc</b></a>
+
+<li>Clack 0.98:
+<a href="0.98/clack-0.98.zip"><b>Binary</b></a> || <a href="0.98/clack-0.98-src.zip"><b>Source Code</b></a> || <a href="0.98/clack-0.98-docs.zip"><b>Javadoc</b></a>
+
+<li>Clack 0.90:
+<a href="0.9/clack-0.9.zip"><b>Binary</b></a> || <a href="0.9/clack-0.9-src.zip"><b>Source Code</b></a> || <a href="0.9/clack-0.9-docs.zip"><b>Javadoc</b></a>
+
+</ul>
+</div>
+</div>
+</td>
+</tr>
+
+
+</table>
+</center>
+
+<div id="footer">
+<!-- <hr><br> -->
+<div>Clack, <a href="http://www.clackrouter.net">www.clackrouter.net</a>, and <a href="http://yuba.stanford.edu/vns/">The Virtual Network System</a> are operated by</div>
+
+<div><a href="http://klamath.stanford.edu/">The High Performance Networking Group</a> at <a href="http://www.stanford.edu/">Stanford University</a></div>
+<!-- Valid <a href="http://validator.w3.org/check?uri=referer">XHTML 1.0</a>, <a href="http://jigsaw.w3.org/css-validator/check/referer">CSS</a> -->
+
+</div>
+
+
+</body>
+</html>

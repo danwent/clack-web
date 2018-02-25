@@ -1,0 +1,288 @@
+<html>
+<title> Basics of Ethernet, ARP, and IP </title> 
+
+<form method="post" 
+action="https://moo.cmcl.cs.cmu.edu/441/clack/clack_section1.cgi" >
+
+<center>
+<img src="http://www.clackrouter.net/logo7.gif" />
+<h2> Basics of Ethernet, ARP and IP </h2>  
+</center>
+<p>
+Download the <a href="ip_tutorial.topo"> configuration file </a>
+and open it within Clack as describe on the 
+<a href="http://www.clackrouter.net/students/"> Student Resources </a> page. 
+At this point, the only hosts on your network with any IP addresses and
+routing table entries are 'isprouter' and 'borderrouter',
+Which can communicate over eth0.  
+</p>
+<ol>
+
+<li> 
+Before generating any other traffic on your network, use the packet 
+level view (ethereal) to analyze packets seen by eth0 of the 'borderrouter' host
+when you ping from that host to eth0 on the 'isprouter'. Record the MAC
+addresses and Ethernet type of the first 8 packets below.  
+Write MAC addresses as strings of hex values with no colons or dashes.
+Specify etherType as either'ARP' or 'IP'. 
+<table>
+<tr> <th></th> <th> MAC src </th> <th> MAC dst </th> <th> EtherType </th> </tr>
+<tr> <td> Packet 1 </td>
+<td> <input type="text" name="1_packet1_src" size=15> </td>
+<td> <input type="text" name="1_packet1_dst" size=15> </td>
+<td> <input type="text" name="1_packet1_type" size=7> </td>
+</tr>
+<tr> <td> Packet 2 </td>
+<td> <input type="text" name="1_packet2_src" size=15> </td>
+<td> <input type="text" name="1_packet2_dst" size=15> </td>
+<td> <input type="text" name="1_packet2_type" size=7> </td>
+</tr>
+<tr> <td> Packet 3 </td>
+<td> <input type="text" name="1_packet3_src" size=15> </td>
+<td> <input type="text" name="1_packet3_dst" size=15> </td>
+<td> <input type="text" name="1_packet3_type" size=7> </td>
+</tr>
+<tr> <td> Packet 4 </td>
+<td> <input type="text" name="1_packet4_src" size=15> </td>
+<td> <input type="text" name="1_packet4_dst" size=15> </td>
+<td> <input type="text" name="1_packet4_type" size=7> </td>
+</tr>
+<tr> <td> Packet 5 </td>
+<td> <input type="text" name="1_packet5_src" size=15> </td>
+<td> <input type="text" name="1_packet5_dst" size=15> </td>
+<td> <input type="text" name="1_packet5_type" size=7> </td>
+</tr>
+<tr> <td> Packet 6 </td>
+<td> <input type="text" name="1_packet6_src" size=15> </td>
+<td> <input type="text" name="1_packet6_dst" size=15> </td>
+<td> <input type="text" name="1_packet6_type" size=7> </td>
+</tr>
+<tr> <td> Packet 7 </td>
+<td> <input type="text" name="1_packet7_src" size=15> </td>
+<td> <input type="text" name="1_packet7_dst" size=15> </td>
+<td> <input type="text" name="1_packet7_type" size=7> </td>
+</tr>
+<tr> <td> Packet 8 </td>
+<td> <input type="text" name="1_packet8_src" size=15> </td>
+<td> <input type="text" name="1_packet8_dst" size=15> </td>
+<td> <input type="text" name="1_packet8_type" size=7> </td>
+</tr>
+</table>
+</li>
+
+<li>
+<p>
+Staying in the network view, toggle the <img src="fib.gif" /> button to see the
+routing tables so far in the network.  You will notice two types of routing
+entries in the table:  <i> local entries </i> , which describe paths to 
+hosts on subnets directly connected to the router, and 
+<i> non-local entries </i>
+which specify a directly connected next-hop as a means to reach a remote
+network. 
+</p>
+<p>
+Ping again from 'borderrouter' to 'isprouter" and record what routing 
+entries on each host where used to forward the ping and its reply packet. 
+Specify a non-existant next-hop as '0.0.0.0', so that each entry except for the 
+interface name is a simple "dotted-quad" IP address (e.g., 12.2.1.1 ).  
+</p>
+<table>
+<tr> <th></th> <th> Network </th> <th> Mask </th> <th> Next-Hop </th> <th> Iface </th></tr>
+<tr> <td> borderrouter </td>
+<td> <input type="text" name="2_entry1_net" size=12> </td>
+<td> <input type="text" name="2_entry1_mask" size=12> </td>
+<td> <input type="text" name="2_entry1_nh" size=12> </td>
+<td> <input type="text" name="2_entry1_iface" size=5> </td>
+</tr>
+<tr> <td> isprouter </td>
+<td> <input type="text" name="2_entry2_net" size=12> </td>
+<td> <input type="text" name="2_entry2_mask" size=12> </td>
+<td> <input type="text" name="2_entry2_nh" size=12> </td>
+<td> <input type="text" name="2_entry2_iface" size=5> </td>
+</tr>
+</table>
+
+</li>
+<li>
+<p>Now let's configure additional routes so that 'isprouter' and 'router3' can
+communicate, even though they are not directly connected.  We will use a /31
+(ie: a prefix containing two IP address) for the subnet between the routers.
+In this case, we choose 177.66.55.2/31 .  Configure eth2 on 'borderrouter' to
+be 177.66.55.2 and eth0 on 'router3' to be 177.66.55.3 .  Now, add the routes
+needed so that all three hosts can reach at least one interface on the other
+host.  
+</p>
+<p>
+<b>Hint:</b>  You should add two routes to the routing table of 'router3', 
+one route to 'borderrouter', and no routes to 'isprouter'.  Use either the 
+property view of each host's IPRouteLookup component, or the command line
+to add routes (see <a href="http://www.clackrouter.net/students/"> 
+student resources </a> page for helpful details).
+</p>
+<p>
+Now ping from 'router3' to 'isprouter'.  Using the network view, what are
+the four routing table entries used to forward the Echo request and reply?
+List them in order of use (slowing the router with the speed bar will help).  
+<table>
+<tr> <th></th> <th> Network </th> <th> Mask </th> <th> Next-Hop </th> <th> Iface </th></tr>
+<tr> <td> router3 (1) </td>
+<td> <input type="text" name="3_entry1_net" size=12> </td>
+<td> <input type="text" name="3_entry1_mask" size=12> </td>
+<td> <input type="text" name="3_entry1_nh" size=12> </td>
+<td> <input type="text" name="3_entry1_iface" size=5> </td>
+</tr>
+<tr> <td> borderrouter (1) </td>
+<td> <input type="text" name="3_entry2_net" size=12> </td>
+<td> <input type="text" name="3_entry2_mask" size=12> </td>
+<td> <input type="text" name="3_entry2_nh" size=12> </td>
+<td> <input type="text" name="3_entry2_iface" size=5> </td>
+</tr>
+<tr> <td> isprouter (1) </td>
+<td> <input type="text" name="3_entry3_net" size=12> </td>
+<td> <input type="text" name="3_entry3_mask" size=12> </td>
+<td> <input type="text" name="3_entry3_nh" size=12> </td>
+<td> <input type="text" name="3_entry3_iface" size=5> </td>
+</tr>
+<tr> <td> borderrouter (2) </td>
+<td> <input type="text" name="3_entry4_net" size=12> </td>
+<td> <input type="text" name="3_entry4_mask" size=12> </td>
+<td> <input type="text" name="3_entry4_nh" size=12> </td>
+<td> <input type="text" name="3_entry4_iface" size=5> </td>
+</tr>
+</table>
+
+</p>
+</li>
+<li>
+<p>While pinging again, zoom into router 'borderrouter' to view the
+behavior of a router that is purely forwarding traffic.  
+</p>
+<p>  
+What are the names of the three components inside the router that perform 
+the IP-specific forwarding functionality?  List them in the order they process 
+a forwarded packet.
+</p>
+Component #1 <input type="text" name="4_comp1" size="20"> <br/>
+Component #2 <input type="text" name="4_comp2" size="20"> <br/>
+Component #3 <input type="text" name="4_comp3" size="20"> <br/>
+
+<br/>What "layer" does Ethernet operate at?
+<select name="4_ethlayer">
+<option value="1">Layer 1 (Physical)</option>
+<option value="2">Layer 2 (Link) </option>
+<option value="3">Layer 3 (Network) </option>
+<option value="4">Layer 4 (Transport) </option>
+<option value="7">Layer 7 (Application) </option>
+</select>
+<br/>What "layer" does IP operate at?
+<select name="4_iplayer">
+<option value="1">Layer 1 (Physical)</option>
+<option value="2">Layer 2 (Link) </option>
+<option value="3">Layer 3 (Network) </option>
+<option value="4">Layer 4 (Transport) </option>
+<option value="7">Layer 7 (Application) </option>
+</select>
+<br/>What "layer" does ARP operate at?
+<select name="4_arplayer">
+<option value="1">Layer 1 (Physical)</option>
+<option value="2">Layer 2 (Link) </option>
+<option value="3">Layer 3 (Network) </option>
+<option value="4">Layer 4 (Transport) </option>
+<option value="7">Layer 7 (Application) </option>
+</select>
+<br/>What "layer" does the ICMP (used to implement ping) operate at?
+<select name="4_icmplayer">
+<option value="1">Layer 1 (Physical)</option>
+<option value="2">Layer 2 (Link) </option>
+<option value="3">Layer 3 (Network) </option>
+<option value="4">Layer 4 (Transport) </option>
+<option value="7">Layer 7 (Application) </option>
+</select>
+</li>
+<li> 
+<p>
+Continue the same ping sequence and use the packet analyzer to look at packets
+being forwarded through 'borderrouter'.  By looking at the 'Iface' column, 
+find two entries that correspond to a single IP packet entering and then
+exiting the router.  Below, select all fields in the ethernet and 
+IP headers that change when 'borderrouter' forwarded the packet from eth2 to
+eth0 (or vice versa).   
+</p>
+<b>Ethernet Header: </b><br/>
+src address: <input type="checkbox" name="5_ethsrc"> <br/>
+dest address: <input type="checkbox" name="5_ethdst"> <br/>
+ethertype: <input type="checkbox" name="5_ethtype"> <br/>
+<b>IP Header: </b><br/>
+version: <input type="checkbox" name="5_ipversion"> <br/>
+header len: <input type="checkbox" name="5_iphdrlen"> <br/>
+ToS bits: <input type="checkbox" name="5_iptos"> <br/>
+total len: <input type="checkbox" name="5_iptotlen"> <br/>
+identification: <input type="checkbox" name="5_ipid"> <br/>
+flags &amp; frag offset: <input type="checkbox" name="5_ipflagsandoffset"> <br/>
+time-to-live: <input type="checkbox" name="5_ipttl"> <br/>
+protocol: <input type="checkbox" name="5_ipproto"> <br/>
+header checksum: <input type="checkbox" name="5_iphdrchksum"> <br/>
+src address: <input type="checkbox" name="5_ipsrc"> <br/>
+dest address: <input type="checkbox" name="5_ipdst"> <br/>
+
+</li>
+<li>
+<p> While no bridges exist in this network, select which of those fields 
+would also be changed by a switch/bridge, if, for example, there was a 
+bridge between 'borderrouter' and hosts in the engineering subnet.  
+</p>
+<b>Ethernet Header: </b><br/>
+src address: <input type="checkbox" name="6_ethsrc"> <br/>
+dest address: <input type="checkbox" name="6_ethdst"> <br/>
+ethertype: <input type="checkbox" name="6_ethtype"> <br/>
+<b>IP Header: </b><br/>
+version: <input type="checkbox" name="6_ipversion"> <br/>
+header len: <input type="checkbox" name="6_iphdrlen"> <br/>
+ToS bits: <input type="checkbox" name="6_iptos"> <br/>
+total len: <input type="checkbox" name="6_iptotlen"> <br/>
+identification: <input type="checkbox" name="6_ipid"> <br/>
+flags &amp; frag offset: <input type="checkbox" name="6_ipflagsandoffset"> <br/>
+time-to-live: <input type="checkbox" name="6_ipttl"> <br/>
+protocol: <input type="checkbox" name="6_ipproto"> <br/>
+header checksum: <input type="checkbox" name="6_iphdrchksum"> <br/>
+src address: <input type="checkbox" name="6_ipsrc"> <br/>
+dest address: <input type="checkbox" name="6_ipdst"> <br/>
+</li>
+<li>
+<p>
+While running ethereal on 'borderrouter', use the 'httpget' command-line 
+utility to generate a TCP packet from 'isprouter' to the 177.66.55.3 
+interface on 'router3' (the TCP packet will be dropped at 'router3' but 
+that's ok).  Use control-C to kill 'httpget' after a few TCP packets have been sent.
+Now send a sequence of pings from 'isprouter' to 
+that same IP address on 'router3'.  Looking at packets on the eth2 interface of 'borderrouter' only,
+what fields in the IP header are different between the ICMP packet
+and the TCP packet?
+</p>
+<b>IP Header: </b><br/>
+version: <input type="checkbox" name="7_ipversion"> <br/>
+header len: <input type="checkbox" name="7_iphdrlen"> <br/>
+ToS bits: <input type="checkbox" name="7_iptos"> <br/>
+total len: <input type="checkbox" name="7_iptotlen"> <br/>
+identification: <input type="checkbox" name="7_ipid"> <br/>
+flags &amp; frag offset: <input type="checkbox" name="7_ipflagsandoffset"> <br/>
+time-to-live: <input type="checkbox" name="7_ipttl"> <br/>
+protocol: <input type="checkbox" name="7_ipproto"> <br/>
+header checksum: <input type="checkbox" name="7_iphdrchksum"> <br/>
+src address: <input type="checkbox" name="7_ipsrc"> <br/>
+dest address: <input type="checkbox" name="7_ipdst"> <br/>
+</li>
+</ul>
+<br/>
+<hr>
+<br/>
+Full Name: <input type="text" name="realname" > 
+<br/>
+Username: <input type="text" name="username" >
+<br/>
+<input type="submit" value="Submit">
+</form>
+
+
+</html>
+

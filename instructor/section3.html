@@ -1,0 +1,202 @@
+<html>
+
+<title> Routing Protocols: RIP &amp; OSPF </title>
+
+<center>
+<img src="http://www.clackrouter.net/logo7.gif" />
+<h2> Routing Protocols: RIP &amp; OSPF  </h2>  
+</center>
+
+
+<form method="post" 
+action="https://moo.cmcl.cs.cmu.edu/441/clack/clack_section3.cgi" >
+
+
+<p>
+<b> Note: </b> The Clack implementations of RIP and OSPF intend
+to demonstrate the high-level concepts of distance-vector (RIP) and link-state
+(OSPF) protocols.  As a result, they are greatly 
+simplified from the real protocol specifications.  
+</p>
+<p>
+Clack is not required to answer all of the following questions, but trying
+out different scenarios will be helpful in confirming answers you are 
+unsure of.  The following two topology files will load networks 
+that are running RIP or OSPF:
+</p>
+<a href="rip.topo"> RIP Topology File </a> <br/>
+<a href="ospf.topo"> OSPF Topology File </a> <br/>
+<p> As described in <a href="http://www.clackrouter.net/students/"> student
+resources </a>, these files are loaded using 
+<i> File->Open </i>.  To run two instances of Clack simultaneously, just
+open two browser windows to the Clack url. </p>
+<ol>
+<li>   
+<p>This problem explores the update behavior of distance-vector and link-state
+protocols <i> from the perspective of a single router R </i>.    
+</p>
+<p> For the following scenarios, consider whether R 
+will "always", "never", or "sometimes" transmit routing data 
+as a result of a certain event in the network (all events are described relative
+to R).  Note that the "chain of events" leading to R
+sending an update may involve a sequence of actions by other routers.  
+We are asking whether this stimulus will eventually result
+in an update from that would not have otherwise been sent by R 
+had the stimulus not occurred.  
+For each scenario, assume that all routers are advertising reachability to all
+locally connected subnets (including those between routers), that the 
+network is not partitioned at any point, and that R has at least two neighbors.
+ </p>
+<p>
+You can disable and enable links in Clack by double-clicking on them in 
+the network view (disabled links turn red).  The <i> ifconfig </i> command line
+program can also be used to bring links up or down, and change the link metric
+for local links.  For RIP and OSPF, the routing table views in the network 
+view shows additional routing specific information (e.g., the metric).  
+<p>
+<table border="1"> 
+<tr> <th> Stimulus </th> <th> RIP </th> <th> OSPF </th> </tr> 
+
+<tr> 
+<td>  One of R's local links goes down.  </td>
+<td>
+<select name="1_1_rip">
+<option value="always"> always </option>
+<option value="never"> never </option>
+<option value="sometimes"> sometimes </option>
+</select>
+</td>
+<td>
+<select name="1_1_ospf">
+<option value="always"> always </option>
+<option value="never"> never </option>
+<option value="sometimes"> sometimes </option>
+</select>
+</td>
+</tr>
+
+<tr> 
+<td>  One of R's local links changes its weight.  </td>
+<td>
+<select name="1_2_rip">
+<option value="always"> always </option>
+<option value="never"> never </option>
+<option value="sometimes"> sometimes </option>
+</select>
+</td>
+<td>
+<select name="1_2_ospf">
+<option value="always"> always </option>
+<option value="never"> never </option>
+<option value="sometimes"> sometimes </option>
+</select>
+</td>
+</tr>
+
+<tr> 
+<td>  A local routing table entry is removed, 
+due to soft-state expiration or manual deletion</td>
+<td>
+<select name="1_3_rip">
+<option value="always"> always </option>
+<option value="never"> never </option>
+<option value="sometimes"> sometimes </option>
+</select>
+</td>
+<td>
+<select name="1_3_ospf">
+<option value="always"> always </option>
+<option value="never"> never </option>
+<option value="sometimes"> sometimes </option>
+</select>
+</td>
+</tr>
+
+
+<tr> 
+<td>  A link not connected to R goes down.  </td>
+<td>
+<select name="1_4_rip">
+<option value="always"> always </option>
+<option value="never"> never </option>
+<option value="sometimes"> sometimes </option>
+</select>
+</td>
+<td>
+<select name="1_4_ospf">
+<option value="always"> always </option>
+<option value="never"> never </option>
+<option value="sometimes"> sometimes </option>
+</select>
+</td>
+</tr>
+
+
+<tr> 
+<td>  A link not connected to R changes its weight </td>
+<td>
+<select name="1_5_rip">
+<option value="always"> always </option>
+<option value="never"> never </option>
+<option value="sometimes"> sometimes </option>
+</select>
+</td>
+<td>
+<select name="1_5_ospf">
+<option value="always"> always </option>
+<option value="never"> never </option>
+<option value="sometimes"> sometimes </option>
+</select>
+</td>
+</tr>
+<tr> 
+<td> R receives a new routing update from a neighbor <br/> 
+(ie: the routing update has a "fresh" ID for originating router) </td>
+<td>
+<select name="1_6_rip">
+<option value="always"> always </option>
+<option value="never"> never </option>
+<option value="sometimes"> sometimes </option>
+</select>
+</td>
+<td>
+<select name="1_6_ospf">
+<option value="always"> always </option>
+<option value="never"> never </option>
+<option value="sometimes"> sometimes </option>
+</select>
+</td>
+</tr>
+
+
+</table> 
+</li>
+
+<li>
+<p>
+You should already be familiar with the "counting to infinity problem"
+of distance-vector protocols like RIP.  Given the Clack RIP topology, 
+choose a set of one or more links that if disabled would to lead to the counting
+to infinity problem.  
+</p>
+router1-router2: <input type="checkbox" name="12"> <br/>
+router1-router3: <input type="checkbox" name="13"> <br/>
+router2-router3: <input type="checkbox" name="23"> <br/>
+router3-router4: <input type="checkbox" name="34"> <br/>
+router3-router5: <input type="checkbox" name="35"> <br/>
+router4-router5: <input type="checkbox" name="45"> <br/>
+
+<p>With this outage, for what prefix did the cost "count to infinity?"</p>
+<input type="text" name="2_prefix" value="X.X.X.X/YY" />
+</li>
+</ol>
+<p>
+Username: <input type="text" name="username" >
+</p>
+<br/>
+<input type="submit" value="Submit">
+</form>
+
+
+
+</html>

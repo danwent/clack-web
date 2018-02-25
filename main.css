@@ -1,0 +1,171 @@
+html, body {
+  /* padding: 1% 0%; */
+  /* padding-top: 0%; */
+  margin-top: 0%;
+  
+  background: white url(bg3.gif) repeat-x; /* striped background modified from one on Opera website: http://my.opera.com/community/graphics/body.gif */
+  color: #000;
+  font-family: Verdana, Arial, sans-serif;
+  font-size: 95%;
+}
+
+a:link {
+  text-decoration: none;
+}
+
+a:visited {
+  text-decoration: none;
+}
+
+a:active {
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+h1, h3, h4, h5, h6 {
+  color: #000;
+  background: transparent;
+  background-color: transparent;
+}
+
+h1 {
+}
+
+h2 {
+	padding: 0.3em;
+	margin: 0;
+	font-weight: bold;
+	font-size: 100%;
+}
+
+h3 {
+  font-size: 110%;
+}
+
+h4 {
+  font-weight: normal;
+  font-size: 100%;
+}
+
+p {
+  font-weight: normal;
+  font-size: 100%;
+}
+
+h5{
+}
+
+h6{
+}
+
+hr {
+	width: 90%;
+  height: 1px;
+  color: #999;
+}
+
+#title {
+	
+  border-top: 1px solid #999;
+	border-left: 1px solid #999;
+	border-right: 1px solid #999;
+  
+  
+  margin-top: 1%;
+  margin-left: 7%;
+  margin-right: 7%;
+  margin-bottom: 0%;
+  
+  padding: 1%;  
+  
+  font-size: 110%;
+  font-weight: bold;
+  text-align: center;
+  /* border-bottom: 1px solid #e9e9e8; */
+}
+
+#container {
+	
+  padding: 0.5em 2.0em;
+  margin: 0% 7%;
+  /* border-top: 1px solid #999; */
+  border-left: 1px solid #999;
+  border-right: 1px solid #999;
+  /* border-bottom: 1px solid #999; */
+  background: #fff none;
+  color: #000;
+
+}
+
+#logo {
+  float: right;
+  width: 49%;
+  border: 0;
+  background: transparent;
+  background-color: transparent;
+  margin: 0;
+}
+
+#screenshot {
+	text-align: left;
+	background: transparent;
+  background-color: transparent;
+  border: 0;
+  margin-bottom: 1.0em;
+	padding-bottom: 1.0em;
+}
+
+.mainblock {
+  margin-top: 2.0em;
+  /* border-left: 2px solid #999; */
+  background: white url(vertbar3.png) no-repeat;
+}
+
+.mainblock h2 {
+	background: url(corner2.png) no-repeat top left;
+	padding-left: 2%;
+}
+
+.heading {
+  width: 100%;
+  /* padding: 0.3em; */
+  text-align: left;
+  background: white url(background3.png) repeat-y;
+  color: white;
+  font-family: Verdana, Arial, sans-serif;
+  font-weight: bold;
+  font-size: 115%;
+}
+
+.headingtext {
+	padding: 0.3em;
+}
+
+.innerblock {
+  padding: 0 2%;
+  
+}
+
+#footer {
+  
+	border-left: 1px solid #999;
+	border-right: 1px solid #999;
+  border-bottom: 1px solid #999;
+  
+  margin-top: 0%;
+  margin-left: 7%;
+  margin-right: 7%;
+  margin-bottom: 1%;
+  
+  padding: 1%;  
+  
+  font-size: 90%;
+  font-weight: bold;
+  text-align: center;
+  border-top: thin dotted #999;
+  color: #666;
+  background: white url(bg3-bottom.gif) repeat-x bottom; /* striped background modified from one on Opera website: http://my.opera.com/community/graphics/body.gif */
+}

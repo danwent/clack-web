@@ -1,0 +1,87 @@
+<html>
+
+<title> IP Addressing &amp; Routing Configuration </title> 
+
+
+<center>
+<img src="http://www.clackrouter.net/logo7.gif" />
+<h2> IP Addressing &amp; Routing Configuration </h2>  
+</center>
+
+<p>
+This lab places you in a job as a network engineer for a 
+fledgling small company. Your first day on the job, you find out that your
+predecessor quit without finishing the company's network set-up. It is 
+your task to finish the job.  You boss hands you the following diagram
+sketching out the desired network:
+</p>
+<p>
+<center>
+<img src="clack_net.gif" />
+<br/><b> figure: diagram of the desired company network set-up </b> 
+</center>
+</p>
+<p>
+Your boss tells you that the company's three routers are already wired up
+to each other, but each of the desired subnets only contains a single computer.
+(the rest are on back-order).  This makes your 
+configuration easier for now, but you need to set-up everything in preparation
+for the eventual subnet sizes.  He also mentions that the ISP has configured 
+the interface on your company's border router with an IP from the ISP's 
+address space, and has also added a default route going out that interface
+for Internet traffic.  
+Finally, your boss tells you that your company has only
+been allocated the 177.66.55.0/24 address block, 
+so you will have conserve IP space when assigning address ranges to 
+each of the subnets and to the internal router interfaces.  
+</p>
+<p>
+Now you should be familiar enough with assigning IP addresses and subnets
+to interfaces and adding routes that you can configure the rest of the
+network.  Remember to closely follow the guidelines of the diagram (below)
+when deciding on the prefixes to use for each subnet (hint, you have enough
+IP space, but not much extra).  You probably want to plan the network out on
+paper first to divide up your /24 and compute what the different
+subnet masks will look like in the 255.255.255.XXX notation.  
+</p>
+<p> 
+If you didn't carefully read the <a href="http://www.clackrouter.net/students/"> 
+student resources
+page </a> about configuring and debugging Clack networks, do so now.
+It can save you a lot of time by speeding configuration and helping you 
+to quickly diagnose any mistakes you make.  
+</p>
+
+<p> A few notes:  When correctly configured, all interfaces on all hosts
+should be reachable from every host on the network.  Using ping will be the
+easiest way to test this.  When you encounter problems, use ethereal, 
+the routing-table network view, and component property views to find out 
+what is wrong.  Even though there is only one host in each of the large 
+subnets, <i> these networks must be configured so that when later hosts are 
+added, the current hosts/routers will continue to function correctly without
+reconfiguration</i>.   Additionally, packets to addresses outside your
+company's prefix should be
+forwarded to the 'isprouter', which in the real world would forward them to 
+the Internet (in our virtual network, it just drops the packets).  
+</p>
+<p> Remember that you can save partially configured topologies, as described
+on the main page. </p>
+
+
+<form method="post" enctype="multipart/form-data" 
+	action="https://moo.cmcl.cs.cmu.edu/441/clack/clack_section2.cgi" >
+
+<p> Upload your completed topology file here 
+(be sure you do <i> File -> Save All </i> before uploading): 
+<br/><input type="file" name="topo_file" />
+<br/>
+</p>
+<p> Username: <input type="text" name="username" /> </p>
+<input type="submit" value="Submit">
+</form>
+
+
+
+</html>
+
+
